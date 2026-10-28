@@ -1,0 +1,66 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: simonboro
+status: open
+reviewed: 2026-10-28
+signature: simonboro · harness Claude Code · S01E03
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+
+  const issues = {
+    parser: 'https://github.com/simon-s8888/what-it-shows/issues/1',
+    hint: 'https://github.com/simon-s8888/what-it-shows/issues/2',
+    'one-day': 'https://github.com/simon-s8888/what-it-shows/issues/3',
+  };
+</script>
+
+[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. The reports merged into it
+describe three different bugs. The fix queued for the parser closes only the first one.
+
+<Callout kind="warn">
+Not one issue. Each problem below has its own ticket now. Do not close them with the parser fix.
+</Callout>
+
+## What #4471 holds
+
+<ProblemTable ticket={4471} {issues} />
+
+Counts come from `reports-4471.json` after removing ids the export lists twice. The cause of a
+report comes from its tenant and the way it came in (`causes.ts`), not from the intake tag, which
+is a guess from the reporter's browser.
+
+## The three problems
+
+**`parser`: the shared parser reads every date month first.** Every tenant in #4471 writes the day
+first. A date like 7 April comes out as 4 July. This is the bug #4471 names, and the fix queued for it.
+
+**`hint`: booking-v3 prints `MM/DD/YYYY` under its date field.** Tenants on booking-v3 write the day
+first, so the form reads the date day first. Their people type what the hint says, month first.
+The date comes out swapped through the form even after the parser is fixed. Only reports through
+the `form` channel at booking-v3 tenants.
+
+**`one-day`: dates shift by one day, not by a swap.** These are the reports the desk already noted
+as a one-day move (`desk-notes.json`). Their bodies describe a meeting one day early or late, a
+different day in Lisbon and in Toronto, an invite that arrived before the booking, one month (June)
+off by one day. That is a time zone or daylight-saving bug, not a date order bug. The parser fix does
+not touch it.
+
+## Why they were merged
+
+Decision [0001](/kb/decisions/0001-dedupe-by-subject) merges on subject line alone. All three
+problems arrive with the same subjects ("Wrong day on the invite", "Date is wrong"), so all three
+landed in one ticket. The subject says what the reporter saw. The body, the tenant and the channel
+say what broke.
+
+## What to do
+
+- Track each problem on its own ticket (table above).
+- Before closing a ticket, check the reports still arriving against its cause, not its subject.
+- Decision 0001 needs a successor record: split on cause (`sameCause`), not on subject.
+
+<RenderStamp {signature} />
