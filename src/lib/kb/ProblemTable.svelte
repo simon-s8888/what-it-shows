@@ -4,9 +4,10 @@
   import { groupByCause, uniqueById, type Report } from '#lib/kb/causes';
   import { tenantOf } from '#lib/kb/locales';
 
-  // One row per problem in a merged ticket. Same grouping as CauseTable, except the reports the desk
-  // read as a one-day move (desk-notes.json) get their own row: their bodies describe a date shifted
-  // by one day, not a day and month swapped, so they are a different bug, not a footnote.
+  // One row per problem in a merged ticket, counted the desk's way: the same groups as CauseTable, by
+  // tenant. The reports the desk read as a one-day move (desk-notes.json) also get a row of their own:
+  // their bodies describe a date shifted by one day, not a day and month swapped, so they are a
+  // different bug. They stay counted under the cause their tenant gives them too.
   let { ticket, issues = {} }: { ticket: number; issues?: Record<string, string> } = $props();
 
   type Row = { problem: string; reports: Report[] };
@@ -14,7 +15,7 @@
   const merged = $derived(uniqueById(reports as Report[]).filter((r) => r.mergedInto === ticket));
   const rows = $derived.by((): Row[] => {
     const moved = (r: Report) => notes.oneDayMove.includes(r.id);
-    const byCause = groupByCause(merged.filter((r) => !moved(r)), tenantOf).map((g) => ({
+    const byCause = groupByCause(merged, tenantOf).map((g) => ({
       problem: g.cause as string,
       reports: g.reports,
     }));

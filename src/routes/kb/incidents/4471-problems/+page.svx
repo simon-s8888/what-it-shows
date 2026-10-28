@@ -30,9 +30,10 @@ Not one issue. Each problem below has its own ticket now. Do not close them with
 
 <ProblemTable ticket={4471} {issues} />
 
-Counts come from `reports-4471.json` after removing ids the export lists twice. The cause of a
-report comes from its tenant and the way it came in (`causes.ts`), not from the intake tag, which
-is a guess from the reporter's browser.
+Counts come from `reports-4471.json` after removing ids the export lists twice, counted the desk's
+way: the cause of a report comes from its tenant and the way it came in (`causes.ts`), not from the
+intake tag, which is a guess from the reporter's browser. The `one-day` reports stay counted under
+`parser` as well, where their tenant files them, so the rows add up to more than the ticket holds.
 
 ## The three problems
 

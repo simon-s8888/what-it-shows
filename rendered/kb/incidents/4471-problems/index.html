@@ -28,11 +28,11 @@ footer { margin-top: 3rem; color: var(--muted); font-size: 0.8rem; border-top: 1
 <h2>What #4471 holds</h2>
 <p class="sum"><strong>412</strong> reports merged into #4471 · <strong>3</strong> problems</p>
 <table><thead><tr><th>problem</th><th>reports</th><th>tagged as</th><th>tenants</th><th>seen</th><th>ticket</th></tr></thead><tbody>
-<tr><td><code>parser</code></td><td>374</td><td class="tags">parser ×351 · hint ×23</td><td>11</td><td>2026-04-01 → 2026-10-04</td><td><a href="https://github.com/simon-s8888/what-it-shows/issues/1">simon-s8888/what-it-shows#1</a></td></tr>
+<tr><td><code>parser</code></td><td>379</td><td class="tags">parser ×356 · hint ×23</td><td>11</td><td>2026-04-01 → 2026-10-04</td><td><a href="https://github.com/simon-s8888/what-it-shows/issues/1">simon-s8888/what-it-shows#1</a></td></tr>
 <tr><td><code>hint</code></td><td>33</td><td class="tags">hint ×18 · parser ×15</td><td>3</td><td>2026-04-17 → 2026-09-22</td><td><a href="https://github.com/simon-s8888/what-it-shows/issues/2">simon-s8888/what-it-shows#2</a></td></tr>
 <tr><td><code>one-day</code></td><td>5</td><td class="tags">parser ×5</td><td>5</td><td>2026-04-02 → 2026-10-04</td><td><a href="https://github.com/simon-s8888/what-it-shows/issues/3">simon-s8888/what-it-shows#3</a></td></tr>
 </tbody></table>
-<p>Counts come from <code>reports-4471.json</code> after removing ids the export lists twice. The cause of a report comes from its tenant and the way it came in (<code>causes.ts</code>), not from the intake tag, which is a guess from the reporter's browser.</p>
+<p>Counts come from <code>reports-4471.json</code> after removing ids the export lists twice, counted the desk's way: the cause of a report comes from its tenant and the way it came in (<code>causes.ts</code>), not from the intake tag, which is a guess from the reporter's browser. The <code>one-day</code> reports stay counted under <code>parser</code> as well, where their tenant files them, so the rows add up to more than the ticket holds.</p>
 <h2>The three problems</h2>
 <p><strong><code>parser</code>: the shared parser reads every date month first.</strong> Every tenant in #4471 writes the day first. A date like 7 April comes out as 4 July. This is the bug #4471 names, and the fix queued for it.</p>
 <p><strong><code>hint</code>: booking-v3 prints <code>MM/DD/YYYY</code> under its date field.</strong> Tenants on booking-v3 write the day first, so the form reads the date day first. Their people type what the hint says, month first. The date comes out swapped through the form even after the parser is fixed. Only reports through the <code>form</code> channel at booking-v3 tenants.</p>
