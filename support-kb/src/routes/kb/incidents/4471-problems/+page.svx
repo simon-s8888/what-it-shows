@@ -4,7 +4,7 @@ title: '#4471 · three problems, not one'
 owner: simon-s8888
 status: open
 reviewed: 2026-10-28
-signature: simon-s8888
+signature: Szymon
 ---
 
 <script>
