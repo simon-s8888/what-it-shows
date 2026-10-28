@@ -4,7 +4,7 @@ title: '#4471 · three problems, not one'
 owner: simon-s8888
 status: open
 reviewed: 2026-10-28
-signature: Szymon Borowiak
+signature: v1.eyJzdWIiOiIyMjcyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMxODIwNjgsImV4cCI6MTc5MzI2ODQ2OH0.G20Nn00JjMtJi5qm2LUxWncv7NxBPx5yrbC7i5CfRU8
 ---
 
 <script>
